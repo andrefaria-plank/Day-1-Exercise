@@ -7,8 +7,13 @@ type Database = {
       cards: {
         Row: Card;
         Insert: Omit<Card, "id" | "created_at">;
+        Update: Partial<Omit<Card, "id" | "created_at">>;
+        Relationships: [];
       };
     };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
   };
 };
 

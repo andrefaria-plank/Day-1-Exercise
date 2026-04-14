@@ -22,3 +22,23 @@ export async function createCard(formData: FormData) {
   revalidatePath("/");
   redirect("/");
 }
+
+export async function updateCard(id: string, formData: FormData) {
+  const english = (formData.get("english") as string).trim();
+  const portuguese = (formData.get("portuguese") as string).trim();
+  const example = (formData.get("example") as string).trim() || null;
+
+  if (!english || !portuguese) {
+    throw new Error("English and Portuguese fields are required.");
+  }
+
+  const { error } = await supabase
+    .from("cards")
+    .update({ english, portuguese, example })
+    .eq("id", id);
+
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/cards");
+  redirect("/cards");
+}

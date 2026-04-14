@@ -44,10 +44,10 @@ export default function LandingPage() {
             Minhas cartas
           </Link>
           <Link
-            href="/cards/new"
+            href="/play"
             className="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
           >
-            Criar carta
+            Jogar →
           </Link>
         </div>
       </header>
@@ -113,16 +113,16 @@ export default function LandingPage() {
         </p>
         <div className="flex flex-col items-center gap-3 sm:flex-row">
           <Link
-            href="/cards/new"
+            href="/play"
             className="rounded-full bg-indigo-600 px-8 py-3 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors shadow-sm"
           >
-            Criar minha primeira carta →
+            Jogar agora →
           </Link>
           <Link
-            href="/cards"
+            href="/cards/new"
             className="rounded-full border border-zinc-200 px-8 py-3 text-sm font-semibold text-zinc-600 hover:border-indigo-400 hover:text-indigo-600 transition-colors dark:border-zinc-700 dark:text-zinc-400"
           >
-            Ver minhas cartas
+            Criar cartas
           </Link>
         </div>
       </section>

@@ -36,12 +36,20 @@ export default function LandingPage() {
         <span className="font-bold text-zinc-900 dark:text-white tracking-tight">
           FlashEnglish
         </span>
-        <Link
-          href="/cards/new"
-          className="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
-        >
-          Criar carta
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/cards"
+            className="rounded-full border border-zinc-200 px-4 py-1.5 text-sm font-medium text-zinc-600 hover:border-indigo-400 hover:text-indigo-600 transition-colors dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
+          >
+            Minhas cartas
+          </Link>
+          <Link
+            href="/cards/new"
+            className="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
+          >
+            Criar carta
+          </Link>
+        </div>
       </header>
 
       {/* Hero */}
@@ -103,12 +111,20 @@ export default function LandingPage() {
           Crie sua primeira carta agora e comece a praticar. É grátis, rápido e
           funciona no celular.
         </p>
-        <Link
-          href="/cards/new"
-          className="rounded-full bg-indigo-600 px-8 py-3 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors shadow-sm"
-        >
-          Criar minha primeira carta →
-        </Link>
+        <div className="flex flex-col items-center gap-3 sm:flex-row">
+          <Link
+            href="/cards/new"
+            className="rounded-full bg-indigo-600 px-8 py-3 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors shadow-sm"
+          >
+            Criar minha primeira carta →
+          </Link>
+          <Link
+            href="/cards"
+            className="rounded-full border border-zinc-200 px-8 py-3 text-sm font-semibold text-zinc-600 hover:border-indigo-400 hover:text-indigo-600 transition-colors dark:border-zinc-700 dark:text-zinc-400"
+          >
+            Ver minhas cartas
+          </Link>
+        </div>
       </section>
 
       {/* Footer */}

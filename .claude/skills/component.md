@@ -9,21 +9,19 @@ Scaffold a new React component named **$ARGUMENTS** for this Next.js project.
 
 ### 1. Determine the component name
 
-- Use `$ARGUMENTS` as the component name exactly as provided (PascalCase expected; if the user passes kebab-case or lowercase, convert it to PascalCase automatically).
-- Call the result `<ComponentName>`.
+Use `$ARGUMENTS` as the component name. Convert to PascalCase if the user passed kebab-case or lowercase (e.g. `flash-card` → `FlashCard`). Call the result `<ComponentName>`.
 
 ### 2. Create the component file
 
 Path: `src/app/components/<ComponentName>.tsx`
 
-Follow the conventions observed in the existing components (`FlashCard.tsx`, `SearchInput.tsx`):
-- Add `"use client";` at the top only if the component uses React hooks (useState, useEffect, etc.) or browser-only APIs. For a generic scaffold, include it by default since most interactive components need it.
-- Define a `<ComponentName>Props` TypeScript type above the component.
+Conventions (match `FlashCard.tsx` and `SearchInput.tsx`):
+- Always include `"use client";` at the top — all scaffolded components are client components by default.
+- Define a `<ComponentName>Props` TypeScript type above the function.
 - Use a default export.
 - Use Tailwind CSS for styling.
-- Keep the scaffold minimal but realistic — a `<div>` wrapper with a placeholder child is fine.
+- The JSX body should be a minimal placeholder — a `<div>` with a comment, not a self-referencing call.
 
-Example shape:
 ```tsx
 "use client";
 
@@ -33,8 +31,8 @@ type <ComponentName>Props = {
 
 export default function <ComponentName>({}: <ComponentName>Props) {
   return (
-    <div>
-      <ComponentName />
+    <div className="flex items-center justify-center">
+      {/* <ComponentName> content */}
     </div>
   );
 }
@@ -44,20 +42,11 @@ export default function <ComponentName>({}: <ComponentName>Props) {
 
 Path: `src/app/components/__tests__/<ComponentName>.test.tsx`
 
-Use **Vitest** + **@testing-library/react** conventions (the standard for Next.js + React 19 projects).
+Use Vitest + @testing-library/react. Import only what is actually used in the tests.
 
-The test file must:
-- Import `describe`, `it`, `expect` from `"vitest"`
-- Import `render`, `screen` from `"@testing-library/react"`
-- Import the component under test
-- Include one `describe` block with at least two `it` cases:
-  1. A basic render test (component mounts without throwing)
-  2. A snapshot or content test (something rendered is in the document)
-
-Example shape:
 ```tsx
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import <ComponentName> from "../<ComponentName>";
 
 describe("<ComponentName>", () => {
@@ -65,7 +54,7 @@ describe("<ComponentName>", () => {
     render(<<ComponentName> />);
   });
 
-  it("is present in the document", () => {
+  it("mounts a DOM element", () => {
     const { container } = render(<<ComponentName> />);
     expect(container.firstChild).toBeTruthy();
   });
@@ -77,19 +66,38 @@ describe("<ComponentName>", () => {
 Path: `src/app/components/index.ts`
 
 - If the file does not exist, create it.
-- If it exists, read it first and append only if the export is not already present.
-- Add a named re-export line:
+- If it exists, read it first and append only if the export line is not already present.
+- Add:
 
 ```ts
 export { default as <ComponentName> } from "./<ComponentName>";
 ```
 
-Keep existing exports intact — do not remove or reorder them.
+Do not remove or reorder existing exports.
 
-### 5. Report what was done
+### 5. Check for vitest config
 
-After all files are written, print a concise summary:
+Check whether `vitest.config.ts` exists at the project root. If it does not, create it:
+
+```ts
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    environment: "jsdom",
+    globals: true,
+  },
+});
+```
+
+Also check `package.json` for a `"test"` script. If missing, note that the user should add `"test": "vitest"` to the `scripts` section.
+
+### 6. Report what was done
+
+Print a concise summary listing:
 - Path to the component file
 - Path to the test file
 - The export line added to `index.ts`
-- A note that tests require `vitest` and `@testing-library/react` to be installed if they are not already in `devDependencies`
+- Whether `vitest.config.ts` was created or already existed

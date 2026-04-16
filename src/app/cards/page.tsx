@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import { supabase } from "@/lib/supabase";
 import type { Card } from "@/lib/types";
 import SearchInput from "./SearchInput";
+import { verifySession } from "@/lib/dal";
+import { logout } from "@/app/actions/auth";
 
 const PAGE_SIZE = 8;
 
@@ -31,7 +33,10 @@ export default async function CardsPage({
 }: {
   searchParams: Promise<{ q?: string; page?: string }>;
 }) {
-  const { q = "", page: pageParam = "1" } = await searchParams;
+  const [{ email }, { q = "", page: pageParam = "1" }] = await Promise.all([
+    verifySession(),
+    searchParams,
+  ]);
   const page = Math.max(1, parseInt(pageParam, 10) || 1);
 
   const { cards, total } = await fetchCards(q, page);
@@ -54,12 +59,25 @@ export default async function CardsPage({
         >
           FlashEnglish
         </Link>
-        <Link
-          href="/cards/new"
-          className="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
-        >
-          + Nova carta
-        </Link>
+        <div className="flex items-center gap-3">
+          <span className="hidden text-xs text-zinc-400 dark:text-zinc-500 sm:block">
+            {email}
+          </span>
+          <Link
+            href="/cards/new"
+            className="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
+          >
+            + Nova carta
+          </Link>
+          <form action={logout}>
+            <button
+              type="submit"
+              className="rounded-full border border-zinc-200 px-4 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:border-red-300 hover:text-red-600 dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-red-700 dark:hover:text-red-400"
+            >
+              Sair
+            </button>
+          </form>
+        </div>
       </header>
 
       <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">

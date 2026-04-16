@@ -1,5 +1,7 @@
 import Link from "next/link";
 import FlashCard from "./components/FlashCard";
+import { getSessionUser } from "@/lib/dal";
+import { logout } from "@/app/actions/auth";
 
 const demoCard = {
   english: "serendipity",
@@ -28,7 +30,9 @@ const steps = [
   },
 ];
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const user = await getSessionUser();
+
   return (
     <div className="flex flex-1 flex-col bg-white dark:bg-zinc-900">
       {/* Nav */}
@@ -37,18 +41,45 @@ export default function LandingPage() {
           FlashEnglish
         </span>
         <div className="flex items-center gap-2">
-          <Link
-            href="/cards"
-            className="rounded-full border border-zinc-200 px-4 py-1.5 text-sm font-medium text-zinc-600 hover:border-indigo-400 hover:text-indigo-600 transition-colors dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
-          >
-            Minhas cartas
-          </Link>
-          <Link
-            href="/play"
-            className="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
-          >
-            Jogar →
-          </Link>
+          {user ? (
+            <>
+              <Link
+                href="/cards"
+                className="rounded-full border border-zinc-200 px-4 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:border-indigo-400 hover:text-indigo-600 dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
+              >
+                Minhas cartas
+              </Link>
+              <Link
+                href="/play"
+                className="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+              >
+                Jogar →
+              </Link>
+              <form action={logout}>
+                <button
+                  type="submit"
+                  className="rounded-full border border-zinc-200 px-4 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:border-red-300 hover:text-red-600 dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-red-700 dark:hover:text-red-400"
+                >
+                  Sair
+                </button>
+              </form>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="rounded-full border border-zinc-200 px-4 py-1.5 text-sm font-medium text-zinc-600 transition-colors hover:border-indigo-400 hover:text-indigo-600 dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
+              >
+                Entrar
+              </Link>
+              <Link
+                href="/signup"
+                className="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+              >
+                Criar conta →
+              </Link>
+            </>
+          )}
         </div>
       </header>
 

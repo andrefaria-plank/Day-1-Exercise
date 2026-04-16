@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlashEnglish — Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Geist', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <style>body { font-family: 'Geist', sans-serif; }</style>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+</head>
+<body class="bg-white text-zinc-900 min-h-screen flex flex-col">
+
+  <!-- Nav -->
+  <header class="flex items-center justify-between px-6 py-4 border-b border-zinc-100">
+    <span class="font-bold text-zinc-900 tracking-tight">FlashEnglish</span>
+    <div class="flex items-center gap-2">
+      <a href="#" class="rounded-full border border-zinc-200 px-4 py-1.5 text-sm font-medium text-zinc-600 hover:border-indigo-400 hover:text-indigo-600 transition-colors">
+        Minhas cartas
+      </a>
+      <a href="#" class="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors">
+        Jogar →
+      </a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="flex flex-1 flex-col items-center justify-center px-6 py-24">
+    <div class="w-full max-w-md flex flex-col items-center gap-8">
+
+      <!-- Badge -->
+      <span class="rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-600">
+        Entre na sua conta
+      </span>
+
+      <!-- Heading -->
+      <div class="text-center flex flex-col gap-2">
+        <h1 class="text-2xl font-bold text-zinc-900">Bem-vindo de volta</h1>
+        <p class="text-sm text-zinc-500">Digite seu e-mail e senha para continuar.</p>
+      </div>
+
+      <!-- Form -->
+      <form class="w-full flex flex-col gap-5">
+
+        <!-- Email -->
+        <div class="flex flex-col gap-1.5">
+          <label for="email" class="text-sm font-medium text-zinc-700">
+            E-mail <span class="text-red-500">*</span>
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="voce@exemplo.com"
+            class="rounded-xl border border-zinc-200 bg-white px-4 py-2.5 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="flex flex-col gap-1.5">
+          <div class="flex items-center justify-between">
+            <label for="password" class="text-sm font-medium text-zinc-700">
+              Senha <span class="text-red-500">*</span>
+            </label>
+            <a href="#" class="text-xs text-indigo-600 hover:underline">Esqueci a senha</a>
+          </div>
+          <input
+            id="password"
+            type="password"
+            placeholder="••••••••"
+            class="rounded-xl border border-zinc-200 bg-white px-4 py-2.5 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+          />
+        </div>
+
+        <!-- Error state (hidden by default, shown as example) -->
+        <!-- <p class="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">E-mail ou senha incorretos.</p> -->
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="mt-2 rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700"
+        >
+          Entrar →
+        </button>
+
+      </form>
+
+      <!-- Divider + Sign up link -->
+      <p class="text-sm text-zinc-500">
+        Não tem conta?
+        <a href="signup.html" class="text-indigo-600 font-medium hover:underline">Criar conta</a>
+      </p>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-zinc-100 px-6 py-6 text-center text-xs text-zinc-400">
+    FlashEnglish — feito para brasileiros que querem falar inglês de verdade.
+  </footer>
+
+</body>
+</html>

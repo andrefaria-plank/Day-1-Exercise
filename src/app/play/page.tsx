@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import Game from "./Game";
+import { verifySession } from "@/lib/dal";
+import { logout } from "@/app/actions/auth";
 
 export default async function PlayPage() {
-  const { data: cards, error } = await supabase
-    .from("cards")
-    .select("*")
-    .order("created_at", { ascending: false });
+  const [{ email }, { data: cards, error }] = await Promise.all([
+    verifySession(),
+    supabase.from("cards").select("*").order("created_at", { ascending: false }),
+  ]);
 
   if (error) throw new Error(error.message);
 
@@ -19,12 +21,28 @@ export default async function PlayPage() {
         >
           FlashEnglish
         </Link>
-        <Link
-          href="/cards"
-          className="text-sm text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
-        >
-          Minhas cartas
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/cards"
+            className="text-sm text-zinc-400 transition-colors hover:text-zinc-600 dark:hover:text-zinc-300"
+          >
+            Minhas cartas
+          </Link>
+          <span className="hidden text-xs text-zinc-300 dark:text-zinc-600 sm:block">
+            |
+          </span>
+          <span className="hidden text-xs text-zinc-400 dark:text-zinc-500 sm:block">
+            {email}
+          </span>
+          <form action={logout}>
+            <button
+              type="submit"
+              className="text-sm text-zinc-400 transition-colors hover:text-red-500 dark:hover:text-red-400"
+            >
+              Sair
+            </button>
+          </form>
+        </div>
       </header>
 
       <Game cards={cards ?? []} />
